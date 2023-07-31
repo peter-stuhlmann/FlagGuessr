@@ -13,7 +13,17 @@ import { useFetch } from '../utils/useFetch';
 const DELAY_CORRECT_ANSWER = 300;
 const DELAY_WRONG_ANSWER = 1500;
 
-export default function Question(): JSX.Element {
+export default function Question({
+  score,
+  setScore,
+  roundsPlayed,
+  setRoundsPlayed,
+}: {
+  score: number;
+  setScore: (score: number) => void;
+  roundsPlayed: number;
+  setRoundsPlayed: (roundsPlayed: number) => void;
+}): JSX.Element {
   const [countries, setCountries] = useState<Country[] | null>(null);
   const [countriesList, setCountriesList] = useState<string[]>([]);
   const [currentCountry, setCurrentCountry] = useState<number>(0);
@@ -24,9 +34,6 @@ export default function Question(): JSX.Element {
   const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null);
 
   const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
-
-  const [roundsPlayed, setRoundsPlayed] = useState<number>(0);
-  const [score, setScore] = useState<number>(0);
 
   const { data, isLoading, error } = useFetch();
 
@@ -115,9 +122,6 @@ export default function Question(): JSX.Element {
     <Loading>Flaggen-Quiz wird geladen...</Loading>
   ) : (
     <>
-      <Score>
-        SCORE: {score}/{roundsPlayed}
-      </Score>
       <FlagContainer>
         {countries && (
           <Image
@@ -164,11 +168,6 @@ const AnswerOptions = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-`;
-
-const Score = styled.div`
-  padding: 10px;
-  text-align: right;
 `;
 
 const Loading = styled.div`
