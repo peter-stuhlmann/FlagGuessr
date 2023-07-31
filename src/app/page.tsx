@@ -1,3 +1,9 @@
+import Question from './components/Question';
+
 export default function Home(): JSX.Element {
-  return <main>Hallo Welt!</main>;
+  return (
+    <main>
+      <Question />
+    </main>
+  );
 }
