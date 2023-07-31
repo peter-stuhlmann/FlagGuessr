@@ -47,7 +47,7 @@ export default function Question(): JSX.Element {
     setCountries(shuffledArray);
 
     // Create a list with country names
-    const commonNamesArray = data.map((item) => item.name.common);
+    const commonNamesArray = data.map((item) => item.name.deu);
     setCountriesList(commonNamesArray);
   }, [data]);
 
@@ -57,7 +57,7 @@ export default function Question(): JSX.Element {
 
       // Make a copy of the country name array (countriesList) and remove the correct answer
       const remainingCountries = countriesList.slice();
-      const currentCountryName = countries[currentCountry].name.common;
+      const currentCountryName = countries[currentCountry].name.deu;
       const indexToRemove = remainingCountries.indexOf(currentCountryName);
       remainingCountries.splice(indexToRemove, 1);
 
@@ -88,7 +88,7 @@ export default function Question(): JSX.Element {
     setRoundsPlayed(roundsPlayed + 1);
 
     // Check whether the selected answer is correct or not
-    if (option === countries[currentCountry].name.common) {
+    if (option === countries[currentCountry].name.deu) {
       setIsAnswerCorrect(true);
       setScore(score + 1);
     } else {
@@ -103,7 +103,7 @@ export default function Question(): JSX.Element {
         setIsWaitingForNext(false); // Reset the waiting state after DELAY seconds
       },
       // If the answer is correct wait DELAY_CORRECT_ANSWER, otherwise DELAY_WRONG_ANSWER
-      option === countries[currentCountry].name.common
+      option === countries[currentCountry].name.deu
         ? DELAY_CORRECT_ANSWER
         : DELAY_WRONG_ANSWER
     );
@@ -121,7 +121,7 @@ export default function Question(): JSX.Element {
       <FlagContainer>
         {countries && (
           <Image
-            src={countries[currentCountry].flags.svg}
+            src={countries[currentCountry].flag}
             alt="Flagge"
             width={450}
             height={300}

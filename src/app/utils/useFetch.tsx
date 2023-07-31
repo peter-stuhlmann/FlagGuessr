@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Country } from '../types';
+import { Country, OriginalCountryObject } from '../types';
 
 export function useFetch() {
   const [data, setData] = useState<Country[] | null>(null);
@@ -8,7 +8,7 @@ export function useFetch() {
   const [error, setError] = useState<string | null>(null);
 
   const apiUrl =
-    'https://restcountries.com/v3.1/independent?status=true&fields=flags,name';
+    'https://restcountries.com/v3.1/independent?status=true&fields=flags,name,translations';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,8 +17,22 @@ export function useFetch() {
         if (!response.ok) {
           throw new Error('Fehler beim Abrufen der Daten');
         }
+
         const responseData = await response.json();
-        setData(responseData);
+
+        const transformedData = responseData.map(
+          (countryObject: OriginalCountryObject) => {
+            return {
+              name: {
+                eng: countryObject.name.common,
+                deu: countryObject.translations.deu.common,
+              },
+              flag: countryObject.flags.svg,
+            };
+          }
+        );
+
+        setData(transformedData);
         setIsLoading(false);
         setError(null);
       } catch (error) {
