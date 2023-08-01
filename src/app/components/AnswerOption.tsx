@@ -60,20 +60,24 @@ const Option = styled.div<{
       : DEFAULT_ANSWER};
   color: #fff;
   padding: 10px 20px;
+  box-sizing: border-box;
   margin-bottom: 20px;
   cursor: pointer;
   width: 300px;
+  max-width: 100%;
   border-radius: 5px;
   user-select: none;
   display: flex;
 
-  ${(p) =>
-    !p.$isAnswerSelected &&
-    `&:hover {
+  @media (min-width: 481x) {
+    ${(p) =>
+      !p.$isAnswerSelected &&
+      `&:hover {
       background-color: ${
         p.$isAnswerSelected ? DEFAULT_ANSWER : DEFAULT_ANSWER_HOVER
       }
   }`}
+  }
 `;
 
 const Numbering = styled.div`

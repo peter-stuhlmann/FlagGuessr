@@ -38,6 +38,11 @@ const Footer = styled.div`
   color: #fff;
   opacity: 0.7;
 
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   a {
     text-decoration: none;
     color: inherit;

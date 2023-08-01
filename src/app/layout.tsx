@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'FlagGuessr',
   description: 'Flaggen-Quiz',
+  themeColor: '#0086FE',
 };
 
 export default function RootLayout({

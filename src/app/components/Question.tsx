@@ -155,10 +155,23 @@ const FlagContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 500px;
+  width: 450px;
+  max-width: 100%;
+  margin: 0 auto 15px auto;
+  padding: 10px;
+  box-sizing: border-box;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
 
   img {
-    width: 450px;
+    width: auto;
+    max-width: 100%;
     height: auto;
+    max-height: 100%;
     border: 1px solid #000;
   }
 `;
@@ -168,6 +181,7 @@ const AnswerOptions = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 10px;
 `;
 
 const Loading = styled.div`
