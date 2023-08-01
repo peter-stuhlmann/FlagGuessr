@@ -8,7 +8,7 @@ export function useFetch() {
   const [error, setError] = useState<string | null>(null);
 
   const apiUrl =
-    'https://restcountries.com/v3.1/independent?status=true&fields=flags,name,translations';
+    'https://restcountries.com/v3.1/independent?status=true&fields=flags,name,translations,continents';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +28,7 @@ export function useFetch() {
                 deu: countryObject.translations.deu.common,
               },
               flag: countryObject.flags.svg,
+              continents: countryObject.continents,
             };
           }
         );
