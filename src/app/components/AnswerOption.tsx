@@ -69,7 +69,7 @@ const Option = styled.div<{
   user-select: none;
   display: flex;
 
-  @media (min-width: 481x) {
+  @media (min-width: 481px) {
     ${(p) =>
       !p.$isAnswerSelected &&
       `&:hover {

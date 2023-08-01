@@ -10,6 +10,7 @@ export type OriginalCountryObject = {
   flags: {
     svg: string;
   };
+  continents: string[];
 };
 
 export type Country = {
@@ -18,4 +19,10 @@ export type Country = {
     eng: string;
   };
   flag: string;
+  continents: string[];
+};
+
+export type Category = {
+  eng: string;
+  deu: string;
 };

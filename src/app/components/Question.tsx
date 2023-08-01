@@ -6,7 +6,7 @@ import { styled } from 'styled-components';
 
 import AnswerOption from './AnswerOption';
 
-import { Country } from '../types';
+import { Category, Country } from '../types';
 
 import { useFetch } from '../utils/useFetch';
 
@@ -18,11 +18,13 @@ export default function Question({
   setScore,
   roundsPlayed,
   setRoundsPlayed,
+  category,
 }: {
   score: number;
   setScore: (score: number) => void;
   roundsPlayed: number;
   setRoundsPlayed: (roundsPlayed: number) => void;
+  category: Category;
 }): JSX.Element {
   const [countries, setCountries] = useState<Country[] | null>(null);
   const [countriesList, setCountriesList] = useState<string[]>([]);
@@ -40,8 +42,14 @@ export default function Question({
   useEffect(() => {
     if (!data) return;
 
+    // Filter by category (continent)
+    const filteredArray =
+      category.eng === 'Worldwide'
+        ? [...data]
+        : data.filter((country) => country.continents.includes(category.eng));
+
     // Randomize the order of the country objects
-    const shuffledArray = [...data];
+    const shuffledArray = [...filteredArray];
 
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -54,9 +62,9 @@ export default function Question({
     setCountries(shuffledArray);
 
     // Create a list with country names
-    const commonNamesArray = data.map((item) => item.name.deu);
+    const commonNamesArray = filteredArray.map((item) => item.name.deu);
     setCountriesList(commonNamesArray);
-  }, [data]);
+  }, [data, category]);
 
   useEffect(() => {
     const createOptions = () => {
