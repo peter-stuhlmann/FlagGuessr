@@ -129,6 +129,7 @@ export default function Question({
             alt="Flagge"
             width={450}
             height={300}
+            priority
           />
         )}
       </FlagContainer>

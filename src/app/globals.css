@@ -5,6 +5,13 @@ body {
   overflow-x: hidden;
 }
 
+@media (min-width: 481px) {
+  html,
+  body {
+    overflow-y: hidden;
+  }
+}
+
 body {
   background: rgb(6, 2, 87);
   background: radial-gradient(

@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google';
 
 import GoogleAnalytics from './utils/analytics';
 
+import StyledComponentsRegistry from './registry';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -19,8 +21,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <GoogleAnalytics GA_TRACKING_ID={'G-DK9ZSQ5EVS'} />
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="preconnect" href="https://google-analytics.com" />
+        <link rel="preconnect" href="https://restcountries.com" />
+      </head>
+      <StyledComponentsRegistry>
+        <GoogleAnalytics GA_TRACKING_ID={'G-DK9ZSQ5EVS'} />
+        <body className={inter.className}>{children}</body>
+      </StyledComponentsRegistry>
     </html>
   );
 }

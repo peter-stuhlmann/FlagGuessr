@@ -13,7 +13,13 @@ export default function HeaderComponent({
 }): JSX.Element {
   return (
     <Header>
-      <Image src="/logo.png" width={318} height={50} alt="FlagGuessr" />
+      <Image
+        src="/logo.png"
+        width={318}
+        height={50}
+        alt="FlagGuessr"
+        priority
+      />
       <Score score={score} roundsPlayed={roundsPlayed} />
     </Header>
   );
