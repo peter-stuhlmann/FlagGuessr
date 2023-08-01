@@ -19,12 +19,16 @@ export default function Question({
   roundsPlayed,
   setRoundsPlayed,
   category,
+  setSelectedCategory,
+  setStep,
 }: {
   score: number;
   setScore: (score: number) => void;
   roundsPlayed: number;
   setRoundsPlayed: (roundsPlayed: number) => void;
   category: Category;
+  setSelectedCategory: (selectedCategory: Category | null) => void;
+  setStep: (step: number) => void;
 }): JSX.Element {
   const [countries, setCountries] = useState<Country[] | null>(null);
   const [countriesList, setCountriesList] = useState<string[]>([]);
@@ -68,7 +72,8 @@ export default function Question({
 
   useEffect(() => {
     const createOptions = () => {
-      if (!countriesList || !countries) return;
+      if (!countriesList || !countries || currentCountry === countries.length)
+        return;
 
       // Make a copy of the country name array (countriesList) and remove the correct answer
       const remainingCountries = countriesList.slice();
@@ -126,35 +131,60 @@ export default function Question({
     setIsWaitingForNext(true); // Set the waiting state to prevent further selection
   };
 
+  // Game reset
+  const handleGameEndButton = () => {
+    setSelectedCategory(null);
+    setScore(0);
+    setRoundsPlayed(0);
+    setStep(0);
+  };
+
   return isLoading ? (
     <Loading>Flaggen-Quiz wird geladen...</Loading>
   ) : (
     <>
-      <FlagContainer>
-        {countries && (
-          <Image
-            src={countries[currentCountry].flag}
-            alt="Flagge"
-            width={450}
-            height={300}
-            priority
-          />
-        )}
-      </FlagContainer>
-      <AnswerOptions>
-        {options &&
-          options.map((option: string, index: number) => (
-            <AnswerOption
-              key={option}
-              option={option}
-              index={index}
-              handleNextFlag={handleNextFlag}
-              correctAnswer={correctAnswer}
-              isAnswerCorrect={isAnswerCorrect}
-              isAnswerSelected={isAnswerSelected}
+      {countries && currentCountry < countries.length && (
+        <>
+          <FlagContainer>
+            <Image
+              src={countries[currentCountry].flag}
+              alt="Flagge"
+              width={450}
+              height={300}
+              priority
             />
-          ))}
-      </AnswerOptions>
+          </FlagContainer>
+          <AnswerOptions>
+            {options &&
+              options.map((option: string, index: number) => (
+                <AnswerOption
+                  key={option}
+                  option={option}
+                  index={index}
+                  handleNextFlag={handleNextFlag}
+                  correctAnswer={correctAnswer}
+                  isAnswerCorrect={isAnswerCorrect}
+                  isAnswerSelected={isAnswerSelected}
+                />
+              ))}
+          </AnswerOptions>
+        </>
+      )}
+      {countries && currentCountry === countries.length && (
+        <GameEnd>
+          <p>
+            Du hast alle Flaggen{' '}
+            {category.eng != 'Worldwide' && <>dieses Kontinents</>}{' '}
+            durchgespielt.
+          </p>
+          <p>
+            Erreichte Punktzahl: {score} von {roundsPlayed} gespielten Flaggen.
+          </p>
+          <button onClick={() => handleGameEndButton()}>
+            Zurück zur Kategorieauswahl
+          </button>
+        </GameEnd>
+      )}
     </>
   );
 }
@@ -199,4 +229,34 @@ const Loading = styled.div`
   align-items: center;
   justify-content: center;
   user-select: none;
+`;
+
+const BUTTON = '#01004b';
+const BUTTON_HOVER = '#1c1a86';
+
+const GameEnd = styled.div`
+  text-align: center;
+  padding: 10px;
+
+  button {
+    border: none;
+    background-color: ${BUTTON};
+    color: #fff;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    margin: 20px auto;
+    cursor: pointer;
+    width: 300px;
+    max-width: 100%;
+    border-radius: 5px;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+
+    @media (min-width: 481px) {
+      &:hover {
+        background-color: ${BUTTON_HOVER};
+      }
+    }
+  }
 `;

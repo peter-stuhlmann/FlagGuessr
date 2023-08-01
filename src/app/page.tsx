@@ -55,6 +55,8 @@ export default function GameScreen(): JSX.Element {
             roundsPlayed={roundsPlayed}
             setRoundsPlayed={setRoundsPlayed}
             category={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            setStep={setStep}
           />
         )}
       </main>
